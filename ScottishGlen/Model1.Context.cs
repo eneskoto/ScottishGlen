@@ -13,10 +13,10 @@ namespace ScottishGlen
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class mssql2102993Entities : DbContext
+    public partial class mssql2102993Entities4 : DbContext
     {
-        public mssql2102993Entities()
-            : base("name=mssql2102993Entities")
+        public mssql2102993Entities4()
+            : base("name=mssql2102993Entities4")
         {
         }
     
@@ -25,7 +25,9 @@ namespace ScottishGlen
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<account> accounts { get; set; }
         public virtual DbSet<scottishGlen> scottishGlens { get; set; }
+        public virtual DbSet<softrec> softrecs { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }

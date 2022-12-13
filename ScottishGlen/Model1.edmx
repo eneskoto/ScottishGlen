@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="mssql2102993Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dbUsername" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="dbPassword" Type="varchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="scottishGlen">
           <Key>
             <PropertyRef Name="ID" />
@@ -18,6 +26,16 @@
           <Property Name="phySticker" Type="image" />
           <Property Name="notes" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="softrec">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sysName" Type="varchar" MaxLength="50" />
+          <Property Name="sysVersion" Type="varchar" MaxLength="50" />
+          <Property Name="sysManufacturer" Type="varchar" MaxLength="50" />
+          <Property Name="hardwareID" Type="int" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -29,7 +47,9 @@
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityContainer Name="mssql2102993ModelStoreContainer">
+          <EntitySet Name="account" EntityType="Self.account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="scottishGlen" EntityType="Self.scottishGlen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="softrec" EntityType="Self.softrec" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
@@ -37,6 +57,14 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="mssql2102993Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dbUsername" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dbPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="scottishGlen">
           <Key>
             <PropertyRef Name="ID" />
@@ -50,6 +78,16 @@
           <Property Name="phySticker" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="softrec">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sysName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sysVersion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sysManufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="hardwareID" Type="Int32" />
+        </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -60,8 +98,10 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityContainer Name="mssql2102993Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="mssql2102993Entities4" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="accounts" EntityType="Self.account" />
           <EntitySet Name="scottishGlens" EntityType="Self.scottishGlen" />
+          <EntitySet Name="softrecs" EntityType="Self.softrec" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
         </EntityContainer>
       </Schema>
@@ -69,7 +109,16 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="mssql2102993ModelStoreContainer" CdmEntityContainer="mssql2102993Entities">
+        <EntityContainerMapping StorageEntityContainer="mssql2102993ModelStoreContainer" CdmEntityContainer="mssql2102993Entities4">
+          <EntitySetMapping Name="accounts">
+            <EntityTypeMapping TypeName="mssql2102993Model.account">
+              <MappingFragment StoreEntitySet="account">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="dbUsername" ColumnName="dbUsername" />
+                <ScalarProperty Name="dbPassword" ColumnName="dbPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="scottishGlens">
             <EntityTypeMapping TypeName="mssql2102993Model.scottishGlen">
               <MappingFragment StoreEntitySet="scottishGlen">
@@ -81,6 +130,17 @@
                 <ScalarProperty Name="ipAdress" ColumnName="ipAdress" />
                 <ScalarProperty Name="phySticker" ColumnName="phySticker" />
                 <ScalarProperty Name="notes" ColumnName="notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="softrecs">
+            <EntityTypeMapping TypeName="mssql2102993Model.softrec">
+              <MappingFragment StoreEntitySet="softrec">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sysName" ColumnName="sysName" />
+                <ScalarProperty Name="sysVersion" ColumnName="sysVersion" />
+                <ScalarProperty Name="sysManufacturer" ColumnName="sysManufacturer" />
+                <ScalarProperty Name="hardwareID" ColumnName="hardwareID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
